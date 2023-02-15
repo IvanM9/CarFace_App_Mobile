@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         val correo=findViewById<TextView>(R.id.correo);
         val clave = findViewById<TextView>(R.id.clave);
         val queue = Volley.newRequestQueue(this)
-        val url = "http://192.168.1.102:8080/sesion/login"
+        val url = "http://192.168.0.105:8080/sesion/login"
 
         var loginRequest = object : StringRequest(
             Method.POST,url,
