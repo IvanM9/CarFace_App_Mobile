@@ -1,13 +1,18 @@
 package com.example.carface_movil
 
+import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PowerManager
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -15,6 +20,10 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import dev.icerock.moko.socket.Socket
+import dev.icerock.moko.socket.SocketEvent
+import dev.icerock.moko.socket.SocketOptions
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +54,7 @@ class MainActivity : AppCompatActivity() {
                         editor.putString("token", "response")
                         editor.putString("ip", ip.text.toString())
                         editor.apply();
+
                         val intent = Intent(this, Solicitud::class.java);
                         startActivity(intent);
                     },
@@ -71,4 +81,5 @@ class MainActivity : AppCompatActivity() {
             println(e.message)
         }
     }
+
 }
