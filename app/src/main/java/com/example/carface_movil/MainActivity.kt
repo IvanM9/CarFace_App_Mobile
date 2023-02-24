@@ -35,9 +35,8 @@ class MainActivity : AppCompatActivity() {
         val correo = findViewById<TextView>(R.id.correo);
         val clave = findViewById<TextView>(R.id.clave);
         val queue = Volley.newRequestQueue(this)
-        val ip = findViewById<TextView>(R.id.txt_ip);
 
-        val url = "http://" + ip.text + ":8080/sesion/login"
+        val url = "http://44.197.199.205:8080/sesion/login"
         try {
             val loginRequest =
                 object : JsonObjectRequest(
@@ -52,10 +51,9 @@ class MainActivity : AppCompatActivity() {
                             getSharedPreferences("Settings", Context.MODE_PRIVATE);
                         val editor: SharedPreferences.Editor = sharedPreferences.edit();
                         editor.putString("token", "response")
-                        editor.putString("ip", ip.text.toString())
+                        editor.putString("ip", "44.197.199.205")
                         editor.apply();
-
-                        val intent = Intent(this, Solicitud::class.java);
+                        val intent = Intent(this, MenuPrincipal::class.java);
                         startActivity(intent);
                     },
                     Response.ErrorListener {

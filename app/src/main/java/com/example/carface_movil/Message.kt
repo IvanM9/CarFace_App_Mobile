@@ -1,36 +1,75 @@
-package com.example.carface_movil
+import android.os.Parcel
+import android.os.Parcelable
 
-import android.widget.Toast
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
+data class Persona(
+    val nombres: String,
+    val apellidos: String,
+    val ci: String,
+    val tipo_licencia: String,
+    val vehiculos: List<Vehiculo>
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.createTypedArrayList(Vehiculo.CREATOR)!!
+    )
 
-class Message(a: JSONObject) {
-    var nombres: String
-    var apellidos: String
-    var tipo_licencia: String
-    var ci: String
-    var vehiculos:JSONArray
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(nombres)
+        parcel.writeString(apellidos)
+        parcel.writeString(ci)
+        parcel.writeString(tipo_licencia)
+        parcel.writeTypedList(vehiculos)
+    }
 
-    companion object {
-        @Throws(JSONException::class)
-        fun JsonObjectsBuild(datos: JSONArray): ArrayList<Message> {
-            val publicacion: ArrayList<Message> = ArrayList<Message>()
-            var i = 0
-            while (i < datos.length()) {
-                publicacion.add(Message(datos.getJSONObject(i)))
-                i++
-            }
-            return publicacion
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Persona> {
+        override fun createFromParcel(parcel: Parcel): Persona {
+            return Persona(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Persona?> {
+            return arrayOfNulls(size)
         }
     }
+}
 
-    init {
-        nombres = a.getString("nombres").toString()
-        tipo_licencia = a.getString("tipo_licencia").toString()
-        apellidos = a.getString("apellidos").toString()
-        ci=a.getString("ci").toString()
-        vehiculos=a.getJSONArray("vehiculos")
+data class Vehiculo(
+    val marca: String,
+    val color: String,
+    val modelo: String,
+    val placa: String
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(marca)
+        parcel.writeString(color)
+        parcel.writeString(modelo)
+        parcel.writeString(placa)
     }
 
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Vehiculo> {
+        override fun createFromParcel(parcel: Parcel): Vehiculo {
+            return Vehiculo(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Vehiculo?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

@@ -18,6 +18,9 @@
         android:theme="@style/Theme.CarFace_Movil"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr" />
         <activity
             android:name=".Solicitud_Entrada"
             android:exported="false" />
@@ -32,6 +35,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/purple_700" />
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="" />
 
         <activity
             android:name=".Solicitud"
