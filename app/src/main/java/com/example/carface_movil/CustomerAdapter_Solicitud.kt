@@ -1,6 +1,7 @@
 package com.example.carface_movil
 
 import Persona
+import WebSocketManager
 import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -54,10 +55,17 @@ class CustomerAdapter_Solicitud constructor(context_: Context,
 
             //Enviar Datos
             itemView.setOnClickListener{ v: View ->
+                try {
+                    WebSocketManager.notificationManager.cancel(userList[position].id_chofer.toInt());
+                }catch (ex:java.lang.Exception){
+                    System.out.println(ex.message)
+                }
                 var position: Int = getAdapterPosition()
-                val intent = Intent(context, EscanearVehiculo::class.java);
-                intent.putExtra("persona", userList[position])
-                context.startActivity(intent);
+                    val intent = Intent(context, EscanearVehiculo::class.java);
+                    intent.putExtra("persona", userList[position])
+                    intent.putExtra("evento","SALIDA")
+                    context.startActivity(intent);
+
             }
         }
     }

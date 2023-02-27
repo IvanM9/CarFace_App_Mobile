@@ -42,7 +42,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="im29@uteq.edu.ec"
+        android:text="lmoreirat@uteq.edu.ec"
         app:layout_constraintBottom_toTopOf="@+id/clave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.548"
