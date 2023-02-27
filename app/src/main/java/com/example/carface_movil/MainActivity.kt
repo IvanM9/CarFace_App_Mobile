@@ -24,6 +24,8 @@ import dev.icerock.moko.socket.Socket
 import dev.icerock.moko.socket.SocketEvent
 import dev.icerock.moko.socket.SocketOptions
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.HashMap
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,12 +59,16 @@ class MainActivity : AppCompatActivity() {
                     null,
                     Response.Listener { response ->
                         Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
+                        val currentDateTime = Calendar.getInstance().time
+
                         val sharedPreferences =
                             getSharedPreferences("Settings", Context.MODE_PRIVATE);
                         val editor: SharedPreferences.Editor = sharedPreferences.edit();
                         editor.putString("token", response.getString("token"))
                         editor.putString("ip", "192.168.0.100")
+                        editor.putLong("last_update", currentDateTime.time)
                         editor.apply();
+
                         val intent = Intent(this, MenuPrincipal::class.java);
                         startActivity(intent);
                     },

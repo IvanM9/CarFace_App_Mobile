@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -215,13 +216,18 @@ class EscanearVehiculo : AppCompatActivity() {
     }
 
     fun quitarVehiculo(persona: Persona){
-        WebSocketData.data.remove(persona);
-        val gson = Gson()
-        val json = gson.toJson(WebSocketData.data)
-        with(sharedPreferences.edit()) {
-            putString("data", json)
-            apply()
+        try {
+            WebSocketData.data.remove(persona);
+            val gson = Gson()
+            val json = gson.toJson(WebSocketData.data)
+            with(sharedPreferences.edit()) {
+                putString("data", json)
+                apply()
+            }
+        }catch (ex:java.lang.Exception){
+            Log.e("QUITAR VEHICULO",ex.message.toString())
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

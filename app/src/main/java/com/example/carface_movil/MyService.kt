@@ -29,9 +29,7 @@ class MyService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // Aquí puedes realizar las tareas que deseas que se ejecuten en segundo plano.
-        // Por ejemplo, puedes iniciar una tarea en un hilo separado:
         Thread {
-            // Código de la tarea aquí
         }.start()
         // Recuperar la información de SharedPreferences
         sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)

@@ -2,21 +2,13 @@ package com.example.carface_movil
 
 import Persona
 import WebSocketManager
-import android.app.*
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-
 import androidx.recyclerview.widget.RecyclerView
-import org.json.JSONObject
 
 class CustomerAdapter_Solicitud constructor(context_: Context,
                                             val userList: ArrayList<Persona>) : RecyclerView.Adapter<CustomerAdapter_Solicitud.ViewHolder>() {
