@@ -29,6 +29,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val sharedPreferences =
+            getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        var token:String=""
+        var sock = sharedPreferences.getString("token", "")
+            ?.let {
+                token=it;
+            }
+        if (token!=""){
+            val intent = Intent(this, MenuPrincipal::class.java);
+            startActivity(intent);
+        }
+
     }
 
     fun login(view: View) {
@@ -36,33 +48,30 @@ class MainActivity : AppCompatActivity() {
         val clave = findViewById<TextView>(R.id.clave);
         val queue = Volley.newRequestQueue(this)
 
-        val url = "http://44.197.199.205:8080/sesion/login"
+        val url = "http://192.168.0.100:8080/sesion/login"
         try {
             val loginRequest =
                 object : JsonObjectRequest(
-                    Request.Method.POST,
+                    Method.POST,
                     url,
                     null,
                     Response.Listener { response ->
-                        val mensaje_error =
-                            Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG);
-                        mensaje_error.show();
+                        Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
                         val sharedPreferences =
                             getSharedPreferences("Settings", Context.MODE_PRIVATE);
                         val editor: SharedPreferences.Editor = sharedPreferences.edit();
-                        editor.putString("token", "response")
-                        editor.putString("ip", "44.197.199.205")
+                        editor.putString("token", response.getString("token"))
+                        editor.putString("ip", "192.168.0.100")
                         editor.apply();
                         val intent = Intent(this, MenuPrincipal::class.java);
                         startActivity(intent);
                     },
                     Response.ErrorListener {
-                        val mensaje_error = Toast.makeText(
+                        Toast.makeText(
                             this,
                             "Error al iniciar sesión",
                             Toast.LENGTH_LONG
-                        );
-                        mensaje_error.show();
+                        ).show();
                     }) {
                     @Throws(AuthFailureError::class)
                     override fun getHeaders(): Map<String, String> {
@@ -79,5 +88,4 @@ class MainActivity : AppCompatActivity() {
             println(e.message)
         }
     }
-
 }
