@@ -1,8 +1,5 @@
 package com.example.carface_movil
 
-import android.app.Activity
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -18,12 +15,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import dev.icerock.moko.socket.Socket
-import dev.icerock.moko.socket.SocketEvent
-import dev.icerock.moko.socket.SocketOptions
-import org.json.JSONObject
+
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -50,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val clave = findViewById<TextView>(R.id.clave);
         val queue = Volley.newRequestQueue(this)
 
-        val url = "http://192.168.0.100:8080/sesion/login"
+        val url = "http://192.168.0.104:8080/sesion/login"
         try {
             val loginRequest =
                 object : JsonObjectRequest(
@@ -65,12 +58,13 @@ class MainActivity : AppCompatActivity() {
                             getSharedPreferences("Settings", Context.MODE_PRIVATE);
                         val editor: SharedPreferences.Editor = sharedPreferences.edit();
                         editor.putString("token", response.getString("token"))
-                        editor.putString("ip", "192.168.0.100")
-                        editor.putLong("last_update", currentDateTime.time)
+                        editor.putString("rol", response.getString("rol"))
+                        editor.putString("ip", "192.168.0.104")
                         editor.apply();
-
-                        val intent = Intent(this, MenuPrincipal::class.java);
-                        startActivity(intent);
+                        if(response.getString("rol")=="GUARDIA"){
+                            val intent = Intent(this, MenuPrincipal::class.java);
+                            startActivity(intent);
+                        }
                     },
                     Response.ErrorListener {
                         Toast.makeText(
@@ -93,5 +87,10 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             println(e.message)
         }
+    }
+
+    fun registro_chofer(view: View){
+        val intent = Intent(this, RegistroActivity::class.java)
+        startActivity(intent)
     }
 }

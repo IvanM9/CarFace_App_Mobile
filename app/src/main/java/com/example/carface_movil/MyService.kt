@@ -48,7 +48,6 @@ class MyService : Service() {
         /*webSocketManager = WebSocketManager()
         thread = Thread(webSocketManager)
         thread.start()*/
-
         val chan = NotificationChannel(
             "MyChannelId",
             "My Foreground Service",
@@ -56,10 +55,8 @@ class MyService : Service() {
         )
         chan.lightColor = Color.BLUE
         chan.lockscreenVisibility = Notification.VISIBILITY_SECRET
-
         val manager = (getSystemService(NOTIFICATION_SERVICE) as NotificationManager)!!
         manager!!.createNotificationChannel(chan)
-
         val notificationBuilder = NotificationCompat.Builder(
             this, "MyChannelId"
         )
@@ -73,7 +70,6 @@ class MyService : Service() {
             .build()
 
         startForeground(1, notification)
-
     }
 
     override fun onDestroy() {

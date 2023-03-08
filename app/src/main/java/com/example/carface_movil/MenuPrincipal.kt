@@ -59,9 +59,9 @@ class MenuPrincipal : AppCompatActivity() {
         startService(serviceIntent)
     }
 
-
     fun buscarVehiculo(view: View){
-        val intent = Intent(this, MenuPrincipal::class.java);
+        val intent = Intent(this, EscanearVehiculo::class.java);
+        intent.putExtra("evento","BUSQUEDA")
         startActivity(intent);
     }
 
@@ -74,7 +74,6 @@ class MenuPrincipal : AppCompatActivity() {
         } else {
             startService(intent)
         }
-
     }
 
     override fun onBackPressed() {
@@ -102,14 +101,16 @@ class MenuPrincipal : AppCompatActivity() {
                 getSharedPreferences("Settings", Context.MODE_PRIVATE);
             val editor: SharedPreferences.Editor = sharedPreferences.edit();
             editor.putString("token", "")
-            editor.putString("ip", "44.197.199.205")
+            editor.putString("rol", "")
+            editor.putString("ip", "")
             editor.apply();
+            val intent1 = Intent(this, MyService::class.java)
+            stopService(intent1)
             val intent = Intent(this, MainActivity::class.java);
             startActivity(intent);
         }
         builder.setNegativeButton("No") { dialog, which ->
             // Acciones a realizar si el usuario cancela
-            // Por ejemplo, no hacer nada y simplemente cerrar el diálogo
             dialog.dismiss()
         }
         val dialog = builder.create()

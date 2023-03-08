@@ -50,7 +50,7 @@ class Solicitud : AppCompatActivity() {
         setContentView(R.layout.activity_solicitud)
 
         var toolbar : Toolbar?= findViewById(R.id.toolbar2);
-        toolbar!!?.title="LISTA DE VEHICULOS"
+        toolbar!!?.title="VEHICULOS EN ESPERA DE SALIDA"
         toolbar.setTitleTextColor(Color.WHITE)
         setSupportActionBar(toolbar);
         // Obtener la instancia de SharedPreferences

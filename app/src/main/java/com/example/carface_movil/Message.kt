@@ -80,3 +80,15 @@ data class Vehiculo(
         }
     }
 }
+
+data class Consulta_Placa(
+    val tipo_licencia: String,
+    val marca_vehiculo: String,
+    val chofer: String,
+    val ci: String,
+    val id_vehiculo: Int,
+    val id_chofer: Int,
+    val color_vehiculo: String,
+    val modelo_vehiculo: String
+    )
+
