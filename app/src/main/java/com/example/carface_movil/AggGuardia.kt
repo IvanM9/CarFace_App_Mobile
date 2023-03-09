@@ -58,7 +58,6 @@ class AggGuardia : AppCompatActivity() {
                 fechaInicioSeleccionada.get(Calendar.DAY_OF_MONTH))
             dialog.show()
         }
-
         fechaFin.setOnClickListener {
             val dialog = DatePickerDialog(this,
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -73,7 +72,6 @@ class AggGuardia : AppCompatActivity() {
                 fechaFinSeleccionada.get(Calendar.DAY_OF_MONTH))
             dialog.show()
         }
-
     }
 
 
