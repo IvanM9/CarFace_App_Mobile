@@ -1,31 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview_vehiculos"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardview_solicitud"
-    android:layout_marginTop="12dp"
     android:layout_marginLeft="12dp"
+    android:layout_marginTop="12dp"
     android:layout_marginRight="12dp"
-    app:cardBackgroundColor="#61A3F60D"
+    app:cardBackgroundColor="#DF33E666"
     app:cardCornerRadius="20dp"
     app:cardElevation="6dp"
-    app:contentPadding="4dp"
-    >
+    app:contentPadding="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:padding="16dp">
 
+        <TextView
+            android:id="@+id/color"
+            android:layout_width="107dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/anio"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="19dp"
+            android:text="color"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/marca"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
-            android:text="vehiculos"
+            android:text="marca"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -35,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="names"
+            android:text="placa"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -45,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
-            android:text="licencia"
+            android:text="modelo"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -54,7 +64,18 @@
             android:id="@+id/tipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ci"
+            android:text="tipo"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/anio"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="19dp"
+            android:text="anio"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />

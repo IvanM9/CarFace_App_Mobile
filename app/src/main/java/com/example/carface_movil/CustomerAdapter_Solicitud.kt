@@ -40,11 +40,10 @@ class CustomerAdapter_Solicitud constructor(context_: Context,
         var licencia: TextView
         var vehiculos:TextView
         init {
-            ci=itemView.findViewById(R.id.ci_txt)
-            nombre=itemView.findViewById(R.id.names_txt)
-            licencia=itemView.findViewById(R.id.tipo_licencia_txt)
-            vehiculos=itemView.findViewById(R.id.vehiculos_txt)
-
+            ci=itemView.findViewById(R.id.tipo)
+            nombre=itemView.findViewById(R.id.placa)
+            licencia=itemView.findViewById(R.id.modelo)
+            vehiculos=itemView.findViewById(R.id.marca)
             //Enviar Datos
             itemView.setOnClickListener{ v: View ->
                 try {

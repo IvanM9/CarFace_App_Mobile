@@ -26,14 +26,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val sharedPreferences =
             getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        var token:String=""
-        var sock = sharedPreferences.getString("token", "")
-            ?.let {
-                token=it;
+        var token = sharedPreferences.getString("token", "")
+        var rol = sharedPreferences.getString("rol", "")
+        if (token!="" && rol!=""){
+            if (rol=="GUARDIA"){
+                val intent = Intent(this, MenuPrincipal::class.java);
+                startActivity(intent);
+            }else if(rol=="CHOFER"){
+                val intent = Intent(this, MenuChofer::class.java);
+                startActivity(intent);
             }
-        if (token!=""){
-            val intent = Intent(this, MenuPrincipal::class.java);
-            startActivity(intent);
         }
 
     }
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         val clave = findViewById<TextView>(R.id.clave);
         val queue = Volley.newRequestQueue(this)
 
-        val url = "http://192.168.0.104:8080/sesion/login"
+        val url = Constants.SERVER+"/sesion/login"
         try {
             val loginRequest =
                 object : JsonObjectRequest(
@@ -52,8 +54,6 @@ class MainActivity : AppCompatActivity() {
                     null,
                     Response.Listener { response ->
                         Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
-                        val currentDateTime = Calendar.getInstance().time
-
                         val sharedPreferences =
                             getSharedPreferences("Settings", Context.MODE_PRIVATE);
                         val editor: SharedPreferences.Editor = sharedPreferences.edit();
@@ -63,6 +63,9 @@ class MainActivity : AppCompatActivity() {
                         editor.apply();
                         if(response.getString("rol")=="GUARDIA"){
                             val intent = Intent(this, MenuPrincipal::class.java);
+                            startActivity(intent);
+                        }else if(response.getString("rol")=="CHOFER"){
+                            val intent = Intent(this, MenuChofer::class.java);
                             startActivity(intent);
                         }
                     },

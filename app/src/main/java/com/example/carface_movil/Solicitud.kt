@@ -1,43 +1,20 @@
 package com.example.carface_movil
 
 import Persona
-import WebSocketManager
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.DownloadManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.os.PowerManager
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import dev.icerock.moko.socket.SocketEvent
-import dev.icerock.moko.socket.SocketOptions
-import io.socket.client.IO
-import io.socket.client.Manager
-import io.socket.client.Socket
-import io.socket.engineio.client.transports.WebSocket
-import org.json.JSONArray
-import org.json.JSONObject
-import java.net.URI
 
 
 class Solicitud : AppCompatActivity() {
@@ -72,7 +49,7 @@ class Solicitud : AppCompatActivity() {
     }
 
     private fun VisualizaCardview_(userList: ArrayList<Persona>){
-        val recyclerView_ : RecyclerView =findViewById(R.id.recycler_articulos)
+        val recyclerView_ : RecyclerView =findViewById(R.id.recyler_cola)
         val adapter_=CustomerAdapter_Solicitud(this, userList)
         recyclerView_.layoutManager= LinearLayoutManager(this,RecyclerView.VERTICAL,false)
         recyclerView_.adapter=adapter_

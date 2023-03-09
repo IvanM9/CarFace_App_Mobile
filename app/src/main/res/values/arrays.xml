@@ -4,5 +4,8 @@
         <item>A</item>
         <item>B</item>
     </string-array>
-
+    <string-array name="tipos_vehiculo" >
+        <item>CARRO</item>
+        <item>MOTO</item>
+    </string-array>
 </resources>

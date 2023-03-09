@@ -24,7 +24,7 @@ class WebSocketManager:Runnable {
         private lateinit var sharedPreferences: SharedPreferences
         lateinit var notificationManager:NotificationManager
         var webSocket:dev.icerock.moko.socket.Socket= dev.icerock.moko.socket.Socket(
-            endpoint = "http://192.168.0.104:8081",
+            endpoint = Constants.SERVER_SOCKET,
             config = SocketOptions(
                 queryParams = mapOf("room" to "a"),
                 transport = SocketOptions.Transport.WEBSOCKET

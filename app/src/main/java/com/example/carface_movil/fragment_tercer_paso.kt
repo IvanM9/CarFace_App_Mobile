@@ -1,9 +1,11 @@
 package com.example.carface_movil
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -17,20 +19,33 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.AuthFailureError
+import com.android.volley.Request
+import  okhttp3.Request as RequestOK
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.snackbar.Snackbar
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +57,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [fragment_tercer_paso.newInstance] factory method to
  * create an instance of this fragment.
  */
-class fragment_tercer_paso : Fragment() {
+class fragment_tercer_paso() : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -53,6 +68,7 @@ class fragment_tercer_paso : Fragment() {
     private lateinit var cameraExecutor: ExecutorService
     private var imageCounter: Int = 0
     private var imageList: ArrayList<String> = ArrayList()
+    private var imagenes: ArrayList<File> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +86,7 @@ class fragment_tercer_paso : Fragment() {
         return inflater.inflate(R.layout.fragment_tercer_paso, container, false)
     }
 
-    private lateinit var jsonObject: JSONObject
+    private var jsonObject: JSONObject= JSONObject()
 
     private val faceDetector = FaceDetection.getClient()
 
@@ -182,14 +198,9 @@ class fragment_tercer_paso : Fragment() {
                     // Detect faces in the captured photo
                     val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
                     // If five photos have been taken, go back to MainActivity with the image list
-                    if (imageCounter == 5) {
+                    if (imageList.size == 5) {
                         photoFile.delete()
-
-
                         registroChofer(jsonObject)
-                        val intent = Intent(requireContext(), MainActivity::class.java)
-                        intent.putStringArrayListExtra("imageList", imageList)
-                        startActivity(intent)
                     }
                     faceDetector.process(InputImage.fromBitmap(bitmap, 0)).addOnSuccessListener { faces ->
                         if (faces.isNotEmpty()) {
@@ -198,12 +209,13 @@ class fragment_tercer_paso : Fragment() {
                             imageCounter++
                             // Add the photo file path to the image list
                             imageList.add(photoFile.absolutePath)
+                            imagenes.add(photoFile);
                         } else {
                             // No faces were detected
                             photoFile.delete();
                         }
                     }.addOnFailureListener { e ->
-                        // Failed to detect faces
+                        photoFile.delete()
                         Log.e(TAG, "Failed to detect faces: ${e.message}", e)
                     }
 
@@ -223,8 +235,7 @@ class fragment_tercer_paso : Fragment() {
 
     fun registroChofer(jsonObject: JSONObject) {
         val queue = Volley.newRequestQueue(requireContext())
-
-        val url = "http://192.168.0.104:8080/chofer"
+        val url = Constants.SERVER+"/chofer"
         try {
             val RegistroRequest =
                 object : JsonObjectRequest(
@@ -258,7 +269,7 @@ class fragment_tercer_paso : Fragment() {
     }
 
     fun login(correo:String,clave:String,cola: RequestQueue) {
-        val url = "http://192.168.0.104:8080/sesion/login"
+        val url = Constants.SERVER+"/sesion/login"
         try {
             val loginRequest =
                 object : JsonObjectRequest(
@@ -266,13 +277,19 @@ class fragment_tercer_paso : Fragment() {
                     url,
                     null,
                     Response.Listener { response ->
-                        Toast.makeText(requireContext(), "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
+                        //Toast.makeText(requireContext(), "Inicio de sesión exitoso", Toast.LENGTH_LONG).show()
+                        val snackbar =
+                            view?.let { Snackbar.make(it, "Registrado correctamente", Snackbar.ANIMATION_MODE_FADE) }
+                        if (snackbar != null) {
+                            snackbar.show()
+                        }
                         val sharedPreferences = requireContext().getSharedPreferences("Settings", Context.MODE_PRIVATE);
                         val editor: SharedPreferences.Editor = sharedPreferences.edit();
                         editor.putString("token", response.getString("token"))
                         editor.putString("rol", response.getString("rol"))
                         editor.putString("ip", "192.168.0.104")
                         editor.apply();
+                        uploadImages(response.getString("token"))
                     },
                     Response.ErrorListener {
                         Toast.makeText(
@@ -295,6 +312,137 @@ class fragment_tercer_paso : Fragment() {
         } catch (e: Exception) {
             println(e.message)
         }
+    }
+
+    fun uploadImages(token:String) {
+        while (imagenes.size > 5) {
+            imagenes.removeAt(imagenes.lastIndex) // Elimina el último elemento del array
+        }
+
+        val maxSizeBytes = 4 * 1024 * 1024 // 4 MB en bytes
+
+        val resizedImages = ArrayList<File>()
+        for (imageFile in imagenes) {
+            var outputStream: ByteArrayOutputStream? = null
+            try {
+                outputStream = ByteArrayOutputStream()
+                val options = BitmapFactory.Options().apply {
+                    inJustDecodeBounds = true
+                    BitmapFactory.decodeFile(imageFile.absolutePath, this)
+                    val imageSizeBytes = outHeight * outWidth * 4 // 4 bytes por pixel (ARGB)
+                    val maxDimension = Math.sqrt((maxSizeBytes / imageSizeBytes).toDouble()).toInt()
+                    val imageHeight = Math.min(outHeight, maxDimension)
+                    val imageWidth = Math.min(outWidth, maxDimension)
+                    inSampleSize = calculateInSampleSize(this, imageWidth, imageHeight)
+                    inJustDecodeBounds = false
+                }
+                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath, options)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
+                val imageBytes = outputStream.toByteArray()
+                if (imageBytes.size <= maxSizeBytes) {
+                    resizedImages.add(imageFile)
+                    continue
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                outputStream?.close()
+            }
+
+            // Escalar la imagen hasta que tenga un tamaño menor o igual a 4 MB
+            var scaleFactor = 0.9f
+            while (outputStream != null && outputStream.size() > maxSizeBytes) {
+                outputStream.reset()
+                val options = BitmapFactory.Options().apply {
+                    inJustDecodeBounds = true
+                    BitmapFactory.decodeByteArray(outputStream.toByteArray(), 0, outputStream.size(), this)
+                    val imageHeight = Math.round(outHeight * scaleFactor)
+                    val imageWidth = Math.round(outWidth * scaleFactor)
+                    inSampleSize = calculateInSampleSize(this, imageWidth, imageHeight)
+                    inJustDecodeBounds = false
+                }
+                val bitmap = BitmapFactory.decodeByteArray(outputStream.toByteArray(), 0, outputStream.size(), options)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
+                scaleFactor *= 0.9f
+            }
+
+            if (outputStream != null && outputStream.size() <= maxSizeBytes) {
+                // Guardar la imagen redimensionada en un archivo temporal
+                val tempFile = createTempFile("resized_image_", ".jpg")
+                tempFile.writeBytes(outputStream.toByteArray())
+                resizedImages.add(tempFile)
+            }
+        }
+
+        val builder = MultipartBody.Builder()
+        builder.setType(MultipartBody.FORM)
+
+        while (imagenes.size != 0) {
+
+            imagenes[imagenes.lastIndex].delete()
+            imagenes.removeAt(imagenes.lastIndex)
+        }
+
+        resizedImages.forEach { image ->
+            val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), image)
+            builder.addFormDataPart("files", image.name, requestFile)
+        }
+
+        val client = OkHttpClient().newBuilder()
+            .callTimeout(3, TimeUnit.MINUTES)
+            .build()
+
+        val requestBody = builder.build()
+
+        val request = RequestOK.Builder()
+            .url(Constants.SERVER+"/chofer/fotos")
+            .put(requestBody)
+            .addHeader("Authorization", "Bearer "+token)
+            .addHeader("Accept","*/*")
+            .addHeader("Content-Type","multipart/form-data")
+            .build()
+        try {
+
+            val loadingDialog = Dialog(requireContext())
+            loadingDialog.setContentView(R.layout.loading_layout)
+            loadingDialog.setCancelable(false)
+            loadingDialog.show()
+
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    val response = client.newCall(request).execute()
+                    if (response.isSuccessful) {
+                        requireActivity().runOnUiThread {
+                            Toast.makeText(requireContext(),"REGISTRADO CON EXITO",Toast.LENGTH_LONG).show()
+                            val intent = Intent(requireContext(), MainActivity::class.java)
+                            intent.putStringArrayListExtra("imageList", imageList)
+                            startActivity(intent)
+                        }
+                    } else {
+                        System.out.println("NO se agregaron")
+                    }
+                }
+                loadingDialog.dismiss()
+            }
+        }catch (e:java.lang.Exception){
+            System.out.println(e)
+        }
+    }
+
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        val height = options.outHeight
+        val width = options.outWidth
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+            val halfHeight = height / 2
+            val halfWidth = width / 2
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+
+        return inSampleSize
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {

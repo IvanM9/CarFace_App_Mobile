@@ -1,51 +1,31 @@
 package com.example.carface_movil
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.NotificationCompat
 
-class MenuPrincipal : AppCompatActivity() {
+class MenuChofer : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_principal)
-        WebSocketManager.context=this;
-        val sharedPreferences =
-            getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        if(sharedPreferences.getString("token", "")!=""){
-            WebSocketManager.webSocket.connect()
-        }else{
-            val intent = Intent(this, MainActivity::class.java);
-            startActivity(intent);
-        }
+        setContentView(R.layout.activity_menu_chofer)
     }
 
-    fun escanearVehiculo(viewF: View){
-        val intent = Intent(this, Solicitud::class.java);
-        startActivity(intent);
-    }
-    fun buscarVehiculo(view: View){
-        val intent = Intent(this, EscanearVehiculo::class.java);
-        intent.putExtra("evento","BUSQUEDA")
+    fun verInfo(view:View){
+        val intent = Intent(this, InformacionPersonal::class.java);
         startActivity(intent);
     }
 
-    override fun onStart() {
-        super.onStart()
-        val intent = Intent(this, MyService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent)
-        } else {
-            startService(intent)
-        }
+    fun mostrarRegistros(view: View){
+
+    }
+
+    fun aggVehiculo(view: View){
+        val intent = Intent(this, RegistraVehiculo::class.java);
+        startActivity(intent);
     }
 
     override fun onBackPressed() {
@@ -87,11 +67,5 @@ class MenuPrincipal : AppCompatActivity() {
         }
         val dialog = builder.create()
         dialog.show()
-    }
-
-
-    fun registroVehiculos(view: View){
-        val intent = Intent(this, MenuPrincipal::class.java);
-        startActivity(intent);
     }
 }

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InformacionPersonal">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_info"
+        android:layout_width="415dp"
+        android:layout_height="72dp"
+        android:background="#047000"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/btn_edit_info"
+        android:layout_width="53dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/white"
+        android:contentDescription="Editar Info"
+        android:onClick="editaInfo"
+        android:src="@drawable/baseline_edit_24"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_info"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_vehiculos"
+        android:layout_width="379dp"
+        android:layout_height="432dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_info"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="414dp"
+        android:layout_height="216dp"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_vehiculos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_info">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="21dp"
+            android:text="Nombre"
+            app:layout_constraintBottom_toTopOf="@+id/textView14"
+            app:layout_constraintStart_toStartOf="@+id/textView14" />
+
+        <TextView
+            android:id="@+id/nombre_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="21dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/ci_info"
+            app:layout_constraintStart_toStartOf="@+id/ci_info" />
+
+        <TextView
+            android:id="@+id/ci_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="22dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/licencia_info"
+            app:layout_constraintStart_toStartOf="@+id/licencia_info" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="22dp"
+            android:text="Cedula"
+            app:layout_constraintBottom_toTopOf="@+id/textView15"
+            app:layout_constraintStart_toStartOf="@+id/textView15" />
+
+        <TextView
+            android:id="@+id/licencia_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="22dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/direccion_info"
+            app:layout_constraintStart_toStartOf="@+id/direccion_info" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="22dp"
+            android:text="Licencia"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/textView17"
+            app:layout_constraintStart_toStartOf="@+id/textView17" />
+
+        <TextView
+            android:id="@+id/direccion_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="22dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/telefono_info"
+            app:layout_constraintStart_toStartOf="@+id/telefono_info" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="22dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="Direccion"
+            app:layout_constraintBottom_toTopOf="@+id/textView18"
+            app:layout_constraintStart_toStartOf="@+id/textView18" />
+
+        <TextView
+            android:id="@+id/telefono_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView18" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="16dp"
+            android:text="Telefono"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

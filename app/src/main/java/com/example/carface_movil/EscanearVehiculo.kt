@@ -91,7 +91,6 @@ class EscanearVehiculo : AppCompatActivity() {
             image?.let {
                 recognizer.process(it)
                     .addOnSuccessListener { visionText ->
-                        val url = "http://192.168.0.104:8080";
                         var existe_vehiculo=false;
                         var num_vehiculo=0
                         val OCR=visionText.text.replace("\n","").replace(" ","-").replace(":","-").replace(";","-");
@@ -118,7 +117,7 @@ class EscanearVehiculo : AppCompatActivity() {
                                     jsonObject.put("id_chofer", persona.id_chofer)
                                     jsonObject.put("observaciones", observ)
                                     jsonObject.put("tipo", evento)
-                                    realizar_Registro(url,jsonObject)
+                                    realizar_Registro(jsonObject)
                                 }
 
                             }else{
@@ -128,7 +127,7 @@ class EscanearVehiculo : AppCompatActivity() {
                         else if(evento=="ENTRADA"){
                             var placa=verificarFormato(OCR);
                             if (placa!="ERROR"){
-                                consulta_Placa(url,placa);
+                                consulta_Placa(placa);
                             }else{
                                 Toast.makeText(this,"La placa no tiene un formato reconocido, por favor, vuelva tomar la foto.",Toast.LENGTH_SHORT).show()
                             }
@@ -143,13 +142,13 @@ class EscanearVehiculo : AppCompatActivity() {
                                 jsonObject.put("id_chofer", consultaPlaca.id_chofer)
                                 jsonObject.put("observaciones", observ)
                                 jsonObject.put("tipo", evento)
-                                realizar_Registro(url,jsonObject)
+                                realizar_Registro(jsonObject)
                             }
                         }
                         else if(evento=="BUSQUEDA"){
                             var placa=verificarFormato(OCR);
                             if (placa!="ERROR"){
-                                consulta_Placa(url,placa);
+                                consulta_Placa(placa);
                             }else{
                                 Toast.makeText(this,"La placa no tiene un formato reconocido, por favor, vuelva tomar la foto.",Toast.LENGTH_SHORT).show()
                             }
@@ -167,7 +166,7 @@ class EscanearVehiculo : AppCompatActivity() {
         }
     }
 
-    fun realizar_Registro(url:String,jsonRequest:JSONObject){
+    fun realizar_Registro(jsonRequest:JSONObject){
         val queue = Volley.newRequestQueue(this)
         val sharedPreferences =
             getSharedPreferences("Settings", Context.MODE_PRIVATE);
@@ -181,7 +180,7 @@ class EscanearVehiculo : AppCompatActivity() {
             val loginRequest =
                 object : JsonObjectRequest(
                     Request.Method.POST,
-                    url+"/registro",
+                    Constants.SERVER+"/registro",
                     jsonRequest,
                     Response.Listener { response ->
                         Toast.makeText(
@@ -260,7 +259,7 @@ class EscanearVehiculo : AppCompatActivity() {
         }
     }
 
-    fun consulta_Placa(url:String,placa:String){
+    fun consulta_Placa(placa:String){
         val queue = Volley.newRequestQueue(this)
         val sharedPreferences =
             getSharedPreferences("Settings", Context.MODE_PRIVATE);
@@ -273,7 +272,7 @@ class EscanearVehiculo : AppCompatActivity() {
             val loginRequest =
                 object : JsonObjectRequest(
                     Request.Method.GET,
-                    url+"/guardia/"+placa.uppercase(),
+                    Constants.SERVER+"/guardia/"+placa.uppercase(),
                     null,
                     Response.Listener { response ->
                         val gson = Gson()
