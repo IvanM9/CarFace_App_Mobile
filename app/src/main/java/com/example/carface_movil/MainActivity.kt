@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
             }else if(rol=="CHOFER"){
                 val intent = Intent(this, MenuChofer::class.java);
                 startActivity(intent);
+            }else if(rol=="ADMINISTRADOR"){
+                val intent = Intent(this, MenuAdmin::class.java);
+                startActivity(intent);
             }
         }
 
@@ -66,6 +69,10 @@ class MainActivity : AppCompatActivity() {
                             startActivity(intent);
                         }else if(response.getString("rol")=="CHOFER"){
                             val intent = Intent(this, MenuChofer::class.java);
+                            startActivity(intent);
+                        }
+                        else if(response.getString("rol")=="ADMINISTRADOR"){
+                            val intent = Intent(this, MenuAdmin::class.java);
                             startActivity(intent);
                         }
                     },

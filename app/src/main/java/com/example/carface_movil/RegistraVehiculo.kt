@@ -2,6 +2,7 @@ package com.example.carface_movil
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -67,12 +68,22 @@ class RegistraVehiculo : AppCompatActivity() {
                         startActivity(intent)
                     },
                     Response.ErrorListener {
-                        Toast.makeText(
-                            this,
-                            "Ocurrió un error al registrar el vehiculo",
-                            Toast.LENGTH_LONG
-                        ).show();
-                        System.out.println(it);
+                        if(it.networkResponse.statusCode==403){
+                            val sharedPreferences =
+                                getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                            val editor: SharedPreferences.Editor = sharedPreferences.edit();
+                            editor.putString("token", "")
+                            editor.putString("rol", "")
+                            editor.putString("ip", "")
+                            editor.apply();
+                            Toast.makeText(
+                                this,
+                                "La sesión caducó, vuelva a ingresar por favor",
+                                Toast.LENGTH_LONG
+                            ).show();
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }
                     }) {
                     @Throws(AuthFailureError::class)
                     override fun getHeaders(): Map<String, String> {

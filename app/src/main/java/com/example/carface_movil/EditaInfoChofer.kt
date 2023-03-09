@@ -72,11 +72,22 @@ class EditaInfoChofer : AppCompatActivity() {
                         startActivity(intent)
                     },
                     Response.ErrorListener {
-                        Toast.makeText(
-                            this,
-                            "Ocurrió un error al registrar la información",
-                            Toast.LENGTH_LONG
-                        ).show();
+                        if(it.networkResponse.statusCode==403){
+                            val sharedPreferences =
+                                getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                            val editor: SharedPreferences.Editor = sharedPreferences.edit();
+                            editor.putString("token", "")
+                            editor.putString("rol", "")
+                            editor.putString("ip", "")
+                            editor.apply();
+                            Toast.makeText(
+                                this,
+                                "La sesión caducó, vuelva a ingresar por favor",
+                                Toast.LENGTH_LONG
+                            ).show();
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }
                         System.out.println(it);
                     }) {
                     @Throws(AuthFailureError::class)

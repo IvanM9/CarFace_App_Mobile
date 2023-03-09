@@ -12,6 +12,12 @@ class MenuChofer : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_chofer)
+        val sharedPreferences =
+            getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        if(sharedPreferences.getString("token", "")==""){
+            val intent = Intent(this, MainActivity::class.java);
+            startActivity(intent);
+        }
     }
 
     fun verInfo(view:View){
