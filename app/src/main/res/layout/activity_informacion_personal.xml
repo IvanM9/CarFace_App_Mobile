@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/info_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InformacionPersonal">
+    tools:context=".chofer.InformacionPersonal">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_info"
@@ -43,6 +44,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="414dp"
         android:layout_height="216dp"
         app:layout_constraintBottom_toTopOf="@+id/recycler_vehiculos"
@@ -52,12 +54,12 @@
 
         <TextView
             android:id="@+id/textView10"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="21dp"
             android:text="Nombre"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView14"
             app:layout_constraintStart_toStartOf="@+id/textView14" />
 
@@ -81,12 +83,12 @@
 
         <TextView
             android:id="@+id/textView14"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="22dp"
             android:text="Cedula"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView15"
             app:layout_constraintStart_toStartOf="@+id/textView15" />
 
@@ -105,8 +107,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="22dp"
             android:text="Licencia"
-            android:textStyle="bold"
             android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView17"
             app:layout_constraintStart_toStartOf="@+id/textView17" />
 
@@ -124,9 +126,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="22dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:text="Direccion"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView18"
             app:layout_constraintStart_toStartOf="@+id/textView18" />
 
@@ -152,5 +154,26 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/blurViewInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/include"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/progressbar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

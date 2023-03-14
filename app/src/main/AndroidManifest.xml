@@ -23,29 +23,44 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".AggGuardia"
+            android:name=".admin.EditarGuardias"
             android:exported="false" />
         <activity
-            android:name=".MenuAdmin"
+            android:name=".admin.EditarDispositivos"
             android:exported="false" />
         <activity
-            android:name=".EditaInfoChofer"
+            android:name=".admin.ListarGuardias"
             android:exported="false" />
         <activity
-            android:name=".InformacionPersonal"
+            android:name=".admin.ListarDispositivos"
             android:exported="false" />
         <activity
-            android:name=".RegistraVehiculo"
+            android:name=".admin.AggDispositivo"
             android:exported="false" />
         <activity
-            android:name=".MenuChofer"
+            android:name=".admin.AggGuardia"
             android:exported="false" />
         <activity
-            android:name=".RegistroActivity"
+            android:name=".admin.MenuAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".chofer.EditaInfoChofer"
+            android:exported="false" />
+        <activity
+            android:name=".chofer.InformacionPersonal"
+            android:exported="false" />
+        <activity
+            android:name=".chofer.RegistraVehiculo"
+            android:exported="false" />
+        <activity
+            android:name=".chofer.MenuChofer"
+            android:exported="false" />
+        <activity
+            android:name=".chofer.RegistroActivity"
             android:exported="false" />
 
         <service
-            android:name=".MyService"
+            android:name=".servicios.MyService"
             android:stopWithTask="false" />
 
         <meta-data
@@ -62,16 +77,16 @@
             android:value="" />
 
         <activity
-            android:name=".Solicitud"
+            android:name=".guardia.Solicitud"
             android:exported="false" />
         <activity
-            android:name=".EscanearVehiculo"
+            android:name=".guardia.EscanearVehiculo"
             android:exported="false" />
         <activity
-            android:name=".MenuPrincipal"
+            android:name=".guardia.MenuPrincipal"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".session.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

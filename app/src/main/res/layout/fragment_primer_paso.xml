@@ -8,7 +8,7 @@
     android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".fragment_primer_paso">
+    tools:context=".chofer.fragment_primer_paso">
 
     <TextView
         android:id="@+id/cedula_label"

@@ -2,160 +2,162 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registra_vehiculo_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistraVehiculo">
+    tools:context=".chofer.RegistraVehiculo">
 
     <TextView
         android:id="@+id/tv_registro_vehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Registro de Vehículo"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_placa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Placa:"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_registro_vehiculo"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_registro_vehiculo" />
 
     <EditText
         android:id="@+id/et_placa"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Ingrese la placa"
-        app:layout_constraintTop_toBottomOf="@id/tv_registro_vehiculo"
-        app:layout_constraintStart_toEndOf="@id/tv_placa"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp"
+        android:hint="Ingrese la placa"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_placa"
+        app:layout_constraintTop_toBottomOf="@id/tv_registro_vehiculo" />
 
     <TextView
         android:id="@+id/tv_marca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Marca:"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/et_placa"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@id/et_placa" />
 
     <EditText
         android:id="@+id/et_marca"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Ingrese la marca"
-        app:layout_constraintTop_toBottomOf="@id/et_placa"
-        app:layout_constraintStart_toEndOf="@id/tv_marca"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp"
+        android:hint="Ingrese la marca"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_marca"
+        app:layout_constraintTop_toBottomOf="@id/et_placa" />
 
     <TextView
         android:id="@+id/tv_modelo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Modelo:"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/et_marca"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@id/et_marca" />
 
     <EditText
         android:id="@+id/et_modelo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Ingrese el modelo"
-        app:layout_constraintTop_toBottomOf="@id/tv_modelo"
-        app:layout_constraintStart_toEndOf="@id/tv_modelo"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp"
+        android:hint="Ingrese el modelo"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_modelo"
+        app:layout_constraintTop_toBottomOf="@id/tv_modelo" />
+
     <TextView
         android:id="@+id/tv_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Color:"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/et_modelo"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@id/et_modelo" />
 
     <EditText
         android:id="@+id/et_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Ingrese el color"
-        app:layout_constraintTop_toBottomOf="@id/et_modelo"
-        app:layout_constraintStart_toEndOf="@id/tv_color"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp"
+        android:hint="Ingrese el color"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_color"
+        app:layout_constraintTop_toBottomOf="@id/et_modelo" />
 
     <TextView
         android:id="@+id/tv_año"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Año:"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/et_color"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@id/et_color" />
 
     <EditText
         android:id="@+id/et_año"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Ingrese el año"
-        app:layout_constraintTop_toBottomOf="@id/et_color"
-        app:layout_constraintStart_toEndOf="@id/tv_año"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp"
+        android:hint="Ingrese el año"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_año"
+        app:layout_constraintTop_toBottomOf="@id/et_color" />
 
     <TextView
         android:id="@+id/tv_tipoVehiculo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Tipo de vehículo:"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/et_año"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@id/et_año" />
 
     <Spinner
         android:id="@+id/sp_tipoVehiculo"
         android:layout_width="0dp"
-        android:theme="@style/SpinnerTheme"
         android:layout_height="wrap_content"
-        android:entries="@array/tipos_vehiculo"
-        app:layout_constraintTop_toBottomOf="@id/et_año"
-        app:layout_constraintStart_toEndOf="@id/tv_tipoVehiculo"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp"
+        android:entries="@array/tipos_vehiculo"
+        android:theme="@style/SpinnerTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_tipoVehiculo"
+        app:layout_constraintTop_toBottomOf="@id/et_año" />
 
     <Button
         android:id="@+id/btn_guardar"
@@ -169,5 +171,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sp_tipoVehiculo" />
+
+    <View
+    android:id="@+id/blurViewaggvehiculo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/progressbar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

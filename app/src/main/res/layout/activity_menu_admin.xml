@@ -2,9 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuAdmin">
+    tools:context=".admin.MenuAdmin">
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="321dp"
+        android:layout_height="121dp"
+        android:background="#568BC34A"
+        android:drawableLeft="@drawable/listado"
+
+        android:onClick="consultaGuardias"
+        android:text="Listado de Guardias"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -40,6 +56,7 @@
         android:layout_width="321dp"
         android:layout_height="121dp"
         android:layout_marginTop="44dp"
+        android:layout_marginBottom="23dp"
         android:background="#568BC34A"
         android:drawableLeft="@drawable/escanear"
         android:onClick="aggGuardia"
@@ -55,12 +72,15 @@
         android:layout_width="321dp"
         android:layout_height="121dp"
         android:layout_marginTop="196dp"
+        android:layout_marginBottom="24dp"
         android:background="#568BC34A"
+
         android:drawableLeft="@drawable/buscar"
-        android:onClick="aggVehiculo"
-        android:text="Agregar Vehiculo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="aggDispositivo"
+        android:text="Agregar Dispositivo"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.0" />
@@ -69,14 +89,16 @@
         android:id="@+id/button5"
         android:layout_width="321dp"
         android:layout_height="121dp"
+        android:layout_marginBottom="24dp"
+
         android:background="#568BC34A"
         android:drawableLeft="@drawable/listado"
-        android:onClick="mostrarRegistros"
-        android:text="Registro de Vehículos"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="consultaDispositivos"
+        android:text="Lista de Dispositivos"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4"
-        app:layout_constraintVertical_bias="0.14" />
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
