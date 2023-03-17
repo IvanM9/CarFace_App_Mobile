@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SpinnerTheme" parent="Theme.AppCompat.Light">
+        <item name="android:textSize">18sp</item> <!-- Tamaño del texto -->
+        <item name="android:paddingVertical">7dp</item> <!-- Altura de los elementos -->
+        <item name="android:background">@android:color/white</item> <!-- Color de fondo -->
+        <item name="android:popupBackground">@android:color/white</item> <!-- Color de fondo del menú desplegable -->
+        <item name="android:dropDownVerticalOffset">5dp</item> <!-- Distancia entre el borde del spinner y el menú desplegable -->
+    </style>
+
+
+    <style name="CustomProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:indeterminateDrawable">@drawable/custom_progressbar</item>
+        <item name="android:progressDrawable">@drawable/custom_progressbar</item>
+    </style>
+
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipos_licencia">
+        <item>A</item>
+        <item>B</item>
+    </string-array>
+    <string-array name="tipos_vehiculo" >
+        <item>CARRO</item>
+        <item>MOTO</item>
+    </string-array>
+</resources>
