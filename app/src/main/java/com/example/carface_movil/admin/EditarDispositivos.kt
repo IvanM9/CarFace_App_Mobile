@@ -71,15 +71,15 @@ class EditarDispositivos : AppCompatActivity() {
         blur.background = null
     }
 
-    fun llenaJSON(){
+    fun llenaJSON():String{
         jsonObjectEnviar.put("ubicacion",ubicaciontxt.text)
         jsonObjectEnviar.put("nombre",nombretxt.text)
         jsonObjectEnviar.put("clave",clavetxt.text)
+        return jsonObjectEnviar.toString();
     }
 
     fun editarDispositivo(view: View){
         iniciaBlur()
-        llenaJSON()
         val queue = Volley.newRequestQueue(this)
         try {
             val loginRequest =
@@ -109,6 +109,10 @@ class EditarDispositivos : AppCompatActivity() {
                         headers.put("Accept", "*/*")
                         headers.put("Authorization","Bearer "+ UTILS.obtieneToken(applicationContext))
                         return headers
+                    }
+
+                    override fun getBody(): ByteArray {
+                        return llenaJSON().toByteArray(Charsets.UTF_8)
                     }
                 }
             queue.add(loginRequest)

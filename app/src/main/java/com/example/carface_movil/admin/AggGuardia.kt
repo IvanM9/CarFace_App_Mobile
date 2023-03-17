@@ -51,14 +51,14 @@ class AggGuardia : AppCompatActivity() {
         llenaJSON()
         val queue = Volley.newRequestQueue(this)
         try {
-            val loginRequest =
+            val agregaGuardiaRequest =
                 object : JsonObjectRequest(
                     Method.POST,
                     Constants.SERVER +"/guardia",
                     jsonObject,
                     Response.Listener { response ->
                         UTILS.muestraMensaje(applicationContext,"Guardia Registrado Correctamente")
-                        val intent = Intent(this, MenuChofer::class.java)
+                        val intent = Intent(this, MenuAdmin::class.java)
                         startActivity(intent)
                     },
                     Response.ErrorListener {
@@ -80,7 +80,7 @@ class AggGuardia : AppCompatActivity() {
                         return headers
                     }
                 }
-            queue.add(loginRequest)
+            queue.add(agregaGuardiaRequest)
         } catch (e: Exception) {
             println(e.message)
         }
@@ -93,9 +93,9 @@ class AggGuardia : AppCompatActivity() {
         jsonObject.put("apellido",apellido.text)
         jsonObject.put("correo",correo.text)
         jsonObject.put("clave",clave.text)
-        jsonObject.put("compañia",compañia.text)
-        jsonObject.put("fechaFin",fechaFin.text)
-        jsonObject.put("fechaInicio",fechaInicio.text)
+        jsonObject.put("compania",compañia.text)
+        jsonObject.put("fecha_fin",fechaFin.text)
+        jsonObject.put("fecha_inicio",fechaInicio.text)
     }
 
     fun inicializaCampos(){
@@ -116,7 +116,7 @@ class AggGuardia : AppCompatActivity() {
                     fechaInicioSeleccionada.set(Calendar.YEAR, year)
                     fechaInicioSeleccionada.set(Calendar.MONTH, month)
                     fechaInicioSeleccionada.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    val sdf = SimpleDateFormat("yyyy-dd-MM", Locale.getDefault())
+                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                     fechaInicio.text = sdf.format(fechaInicioSeleccionada.time)
                 },
                 fechaInicioSeleccionada.get(Calendar.YEAR),
@@ -133,7 +133,7 @@ class AggGuardia : AppCompatActivity() {
                     fechaFinSeleccionada.set(Calendar.YEAR, year)
                     fechaFinSeleccionada.set(Calendar.MONTH, month)
                     fechaFinSeleccionada.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    val sdf = SimpleDateFormat("yyyy-dd-MM", Locale.getDefault())
+                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                     fechaFin.text = sdf.format(fechaFinSeleccionada.time)
                 },
                 fechaFinSeleccionada.get(Calendar.YEAR),

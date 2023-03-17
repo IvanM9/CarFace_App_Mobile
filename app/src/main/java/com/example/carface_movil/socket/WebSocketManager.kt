@@ -53,6 +53,7 @@ class WebSocketManager:Runnable {
             }
             on("get_message") { args ->
                 if (context?.let { UTILS.obtieneRol(it) } =="GUARDIA"){
+                    sharedPreferences= context!!.getSharedPreferences("Settings", Context.MODE_PRIVATE)
                     val gson = Gson()
                     val persona = gson.fromJson(JSONObject(args).getString("message"), Persona::class.java)
                     lock.lock() // Bloquea el objeto Lock
@@ -61,6 +62,7 @@ class WebSocketManager:Runnable {
                             WebSocketData.data.add(persona)
                             val gson = Gson()
                             val json = gson.toJson(WebSocketData.data)
+
                             with(sharedPreferences.edit()) {
                                 putString("data", json)
                                 apply()

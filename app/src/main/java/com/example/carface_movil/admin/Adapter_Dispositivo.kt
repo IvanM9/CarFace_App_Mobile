@@ -9,8 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.AuthFailureError
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.carface_movil.Constants
 import com.example.carface_movil.R
 import com.example.carface_movil.utils.UTILS
 import com.google.gson.Gson
@@ -36,7 +43,6 @@ class Adapter_Dispositivo(
         viewHolder.codigo.text =  "Codigo: "+userList[i].codigo
         viewHolder.correo.text =  "Correo: "+userList[i].correo
         viewHolder.nombre.text =  "Nombre: "+userList[i].nombre
-
         viewHolder.editar.setOnClickListener{v: View ->
             val intent=Intent(context,EditarDispositivos::class.java)
             llenJSON(userList[i])
@@ -46,7 +52,55 @@ class Adapter_Dispositivo(
             context.startActivity(intent)
         }
         viewHolder.eliminar.setOnClickListener{v: View ->
+            showConfirmationDialog(userList[i].id)
+        }
+    }
 
+    fun showConfirmationDialog(id:String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Esta acción borrará el dispositivo elegido. ¿Desea continuar?")
+        builder.setPositiveButton("Sí") { dialog, which ->
+            borraDispositivo(id)
+        }
+        builder.setNegativeButton("No") { dialog, which ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    fun borraDispositivo(id:String){
+        val queue = Volley.newRequestQueue(context)
+        try {
+            val loginRequest =
+                object : StringRequest(
+                    Method.DELETE,
+                    Constants.SERVER +"/dispositivo/"+id,
+                    Response.Listener { response:String ->
+                        UTILS.muestraMensaje(context,"Eliminado Correctamente")
+                    },
+                    Response.ErrorListener {
+                        if (it.networkResponse.statusCode==403){
+                            UTILS.muestraMensaje(context,"Por favor inicie sesión nuevamente")
+                            UTILS.limpiaMemoria(context)
+                            UTILS.vuelveLogin(context)
+                        }else{
+                            UTILS.muestraMensaje(context,"Ocurrio un error al borrar el dispositivo")
+                        }
+                        System.out.println(it)
+                    }) {
+                    @Throws(AuthFailureError::class)
+                    override fun getHeaders(): Map<String, String> {
+                        val headers = HashMap<String, String>()
+                        headers.put("Content-Type", "application/json")
+                        headers.put("Accept", "*/*")
+                        headers.put("Authorization","Bearer "+UTILS.obtieneToken(context))
+                        return headers
+                    }
+                }
+            queue.add(loginRequest)
+        } catch (e: Exception) {
+            println(e.message)
         }
     }
 

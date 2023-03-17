@@ -13,18 +13,17 @@
     app:contentPadding="4dp">
 
     <RelativeLayout
+        android:id="@+id/color_fondo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/empresa_guardia"
-            android:layout_width="78dp"
+            android:layout_width="103dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="149dp"
-            android:layout_marginEnd="285dp"
+            android:layout_below="@+id/nombre_guardia"
+            android:layout_marginTop="13dp"
             android:text="modelo"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -68,6 +67,27 @@
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/eliminar_guardia"
+            android:layout_width="61dp"
+            android:layout_height="63dp"
+            android:layout_below="@+id/editar_guardia"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="1dp"
+            android:background="@drawable/border"
+            android:src="@drawable/baseline_delete_24" />
+
+        <ImageView
+            android:id="@+id/editar_guardia"
+            android:layout_width="61dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="1dp"
+            android:background="@drawable/border"
+            android:src="@drawable/baseline_edit_24" />
 
     </RelativeLayout>
 

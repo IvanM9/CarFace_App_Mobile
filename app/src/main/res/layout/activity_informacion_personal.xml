@@ -25,7 +25,6 @@
         android:layout_height="54dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/white"
         android:contentDescription="Editar Info"
         android:onClick="editaInfo"
         android:src="@drawable/baseline_edit_24"

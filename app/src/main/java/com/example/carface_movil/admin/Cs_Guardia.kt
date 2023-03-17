@@ -9,9 +9,10 @@ class Cs_Guardia(a: JSONObject) {
     var ci: String
     var correo: String
     var nombre: String
+    var apellido: String
     var telefono: String
     var empresa: String
-    var id:Long
+    var id:String
 
     companion object {
         @Throws(JSONException::class)
@@ -19,7 +20,10 @@ class Cs_Guardia(a: JSONObject) {
             val dispositivos: ArrayList<Cs_Guardia> = ArrayList<Cs_Guardia>()
             var i = 0
             while (i < datos.length()) {
-                dispositivos.add(Cs_Guardia(datos.getJSONObject(i)))
+                System.out.println("Dato # "+i+": "+datos.getJSONObject(i))
+                if(datos.getJSONObject(i).getBoolean("estado")){
+                    dispositivos.add(Cs_Guardia(datos.getJSONObject(i)))
+                }
                 i++
             }
             return dispositivos
@@ -30,9 +34,10 @@ class Cs_Guardia(a: JSONObject) {
         estado = a.getBoolean("estado")
         ci = a.getString("ci").toString()
         correo = a.getString("correo").toString()
-        nombre = a.getString("nombre").toString()
+        nombre = a.getString("nombres").toString()
+        apellido = a.getString("apellidos").toString()
         telefono = a.getString("telefono").toString()
         empresa = a.getString("empresa").toString()
-        id=a.getLong("id")
+        id=a.getString("id")
     }
 }

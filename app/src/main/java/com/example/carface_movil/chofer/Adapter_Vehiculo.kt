@@ -24,12 +24,12 @@ class Adapter_Vehiculo(
     }
 
     override fun onBindViewHolder(viewHolder: Adapter_Vehiculo.ViewHolder, i: Int) {
-        viewHolder.tipo.text = userList[i].tipoVehiculo
-        viewHolder.placa.text =  userList[i].placa
-        viewHolder.marca.text =  userList[i].marca
-        viewHolder.modelo.text =  userList[i].modelo
-        viewHolder.anio.text =  userList[i].anio
-        viewHolder.color.text =  userList[i].color
+        viewHolder.tipo.text = "Tipo: "+userList[i].tipoVehiculo
+        viewHolder.placa.text =  "Placa: "+userList[i].placa
+        viewHolder.marca.text =  "Marca: "+userList[i].marca
+        viewHolder.modelo.text =  "Modelo: "+userList[i].modelo
+        viewHolder.anio.text =  "Año: "+userList[i].anio
+        viewHolder.color.text =  "Color: "+userList[i].color
     }
 
     override fun getItemCount(): Int {

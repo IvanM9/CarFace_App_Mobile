@@ -61,6 +61,7 @@ class fragment_tercer_paso : Fragment() {
 
     private lateinit var viewFinder: PreviewView
     private var imageCapture: ImageCapture? = null
+    private lateinit var progressH:ProgressBar
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
     private var imageCounter: Int = 0
@@ -109,11 +110,12 @@ class fragment_tercer_paso : Fragment() {
     }
 
     fun iniciaCampos(view: View){
+        progressH = view.findViewById(R.id.progressBarFotos_H)
         viewFinder = view.findViewById(R.id.view_finder)
         progressBar = view.findViewById(R.id.carga)
         progressBar.visibility=View.GONE
         mainLayout = view.findViewById(R.id.foto_layout)
-        blur = view.findViewById(R.id.blurViewInfo)
+        blur = view.findViewById(R.id.blurViewFoto)
         // Set up the directory where the photos will be stored
         outputDirectory = getOutputDirectory()
         // Set up the camera executor service
@@ -184,16 +186,23 @@ class fragment_tercer_paso : Fragment() {
     }
 
     private fun takePhoto() {
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(configPhotoFile()).build()
+
+        val photoFile = File(outputDirectory,
+            SimpleDateFormat(FILENAME_FORMAT, Locale.US
+            ).format(System.currentTimeMillis()) + ".jpg"
+        )
+
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
         imageCapture?.takePicture(
             outputOptions, ContextCompat.getMainExecutor(requireContext()), object :
                 ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val bitmap = BitmapFactory.decodeFile(configPhotoFile().absolutePath)
+                    val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
                     if (imagenes.size == 5) {
                         registroChofer(jsonObject)
                     }
-                    detectorRostros(bitmap)
+                    if(bitmap!=null)
+                        detectorRostros(bitmap,photoFile)
                 }
                 override fun onError(exception: ImageCaptureException) {
                     Log.e(TAG, "Photo capture failed: ${exception.message}", exception)
@@ -201,16 +210,7 @@ class fragment_tercer_paso : Fragment() {
                 })
     }
 
-    fun configPhotoFile():File{
-        return File(
-            outputDirectory,
-            SimpleDateFormat(
-                FILENAME_FORMAT, Locale.US
-            ).format(System.currentTimeMillis()) + ".jpg"
-        )
-    }
-
-    fun detectorRostros(bitmap: Bitmap){
+    fun detectorRostros(bitmap: Bitmap,photo:File){
         faceDetector.process(
             InputImage.fromBitmap(
                 bitmap,
@@ -219,12 +219,14 @@ class fragment_tercer_paso : Fragment() {
         ).addOnSuccessListener { faces ->
             if (faces.isNotEmpty()) {
                 imageCounter++
-                imagenes.add(configPhotoFile())
+                imagenes.add(photo)
+                val progress = (imageCounter.toFloat() / 5) * 100
+                progressH.progress = progress.toInt()
             } else {
-                configPhotoFile().delete()
+                photo.delete()
             }
         }.addOnFailureListener { e ->
-            configPhotoFile().delete()
+            photo.delete()
             Log.e(TAG, "Failed to detect faces: ${e.message}", e)
         }
     }
